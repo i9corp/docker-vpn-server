@@ -18,6 +18,6 @@ sudo apt-get update
 # sudo apt-get install docker-ce
 # sudo apt-cache madison docker-ce
 
-sudo apt-get install docker-ce=18.03.0~ce-0~debian
+sudo apt-get install docker-ce=17.09.1~ce-0~debian
 
 sudo docker run hello-world
