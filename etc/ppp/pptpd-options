@@ -11,6 +11,7 @@ ms-dns 8.8.8.8
 ms-dns 8.8.4.4
 proxyarp
 nodefaultroute
+noipdefault
 
 # Logging
 # debug

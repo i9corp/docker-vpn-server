@@ -9,11 +9,13 @@ modprobe nf_conntrack_pptp \
     && modprobe ppp_mppe \
     && modprobe ip_gre
 
+# enable configuration service
+service pptp-config start
+# service radius-config start
+
 # start logging
 service rsyslog start
 service pptpd start
-
-# enable IP forwarding
-service pptpconfig start
+# service freeradius restart
 
 tail -f /var/log/syslog
