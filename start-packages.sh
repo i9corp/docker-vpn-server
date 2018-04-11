@@ -11,11 +11,11 @@ modprobe nf_conntrack_pptp \
 
 # enable configuration service
 service pptp-config start
-# service radius-config start
+/etc/init.d/radius-config start
 
 # start logging
 service rsyslog start
 service pptpd start
-# service freeradius restart
+service freeradius restart
 
 tail -f /var/log/syslog

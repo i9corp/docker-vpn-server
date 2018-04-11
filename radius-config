@@ -1,12 +1,12 @@
 #!/bin/bash  
 ### BEGIN INIT INFO
-# Provides:          radiusconfig
+# Provides:          radius-config
 # Required-Start:    
 # Required-Stop:
 # Default-Start:     
 # Default-Stop:
-# Short-Description: radiusconfig.
-# Description:       radiusconfig.
+# Short-Description: radius-config.
+# Description:       radius-config.
 ### END INIT INFO
 # Source function library  
 . /lib/lsb/init-functions
@@ -14,26 +14,25 @@
 # start function  
 start() { 
 
-export PGPASSWORD=$pg_pass
-echo "psql --host=$pg_host --username=$pg_user --port=$pg_port --database=$pg_dbase --port=$pg_port";
+export PGPASSWORD=$PG_PASS
 
 cat /etc/freeradius/3.0/mods-available/i9_sql  \
-    |  sed -e "s/#pg_port/$pg_port/g" \
-    | sed -e "s/#pg_user/$pg_user/g" \
-    | sed -e "s/#pg_pass/$pg_pass/g" \
-    | sed -e "s/#pg_dbase/$pg_dbase/g" \
-    | sed -e "s/#pg_host/$pg_host/g" \
+    |  sed -e "s/#pg_port/$PG_PORT/g" \
+    | sed -e "s/#pg_user/$PG_USER/g" \
+    | sed -e "s/#pg_pass/$PG_PASS/g" \
+    | sed -e "s/#pg_dbase/$PG_DBASE/g" \
+    | sed -e "s/#pg_host/$PG_HOST/g" \
     > /etc/freeradius/3.0/mods-available/sql
 
-echo "CREATE DATABASE \"$pg_dbase\" WITH OWNER \"$pg_user\";" > /usr/src/raddb/setup.sql
+echo "CREATE DATABASE \"$PG_DBASE\" WITH OWNER \"$PG_USER\";" > /usr/src/raddb/setup.sql
 
-CREATE_DB=`psql --host=$pg_host --username=$pg_user --port=$pg_port --command="SELECT datname FROM pg_database" | grep "$pg_dbase" | wc -l`
+CREATE_DB=`psql --host=$PG_HOST --username=$PG_USER --port=$PG_PORT --command="SELECT datname FROM pg_database" | grep "$PG_DBASE" | wc -l`
 if [ "$CREATE_DB" -lt "1" ]; 
   then
-        psql --host=$pg_host --username=$pg_user --port=$pg_port --dbname=$pg_dbase --file=/usr/src/raddb/setup.sql
-        psql --host=$pg_host --username=$pg_user --port=$pg_port --dbname=$pg_dbase --file=/usr/src/raddb/schema.sql
-        psql --host=$pg_host --username=$pg_user --port=$pg_port --dbname=$pg_dbase --file=/usr/src/raddb/ippool.sql
-        psql --host=$pg_host --username=$pg_user --port=$pg_port --dbname=$pg_dbase --file=/usr/src/raddb/cui.sql
+        psql --host=$PG_HOST --username=$PG_USER --port=$PG_PORT --dbname=$PG_DBASE --file=/usr/src/raddb/setup.sql
+        psql --host=$PG_HOST --username=$PG_USER --port=$PG_PORT --dbname=$PG_DBASE --file=/usr/src/raddb/schema.sql
+        psql --host=$PG_HOST --username=$PG_USER --port=$PG_PORT --dbname=$PG_DBASE --file=/usr/src/raddb/ippool.sql
+        psql --host=$PG_HOST --username=$PG_USER --port=$PG_PORT --dbname=$PG_DBASE --file=/usr/src/raddb/cui.sql
 fi
 
 echo "radius database connection via postgres is set up"

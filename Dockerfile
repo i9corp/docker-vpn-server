@@ -30,13 +30,14 @@ RUN update-rc.d pptp-config defaults
 RUN update-rc.d radius-config defaults
 
 # freeradius
-ENV pg_user="radius"
-ENV pg_pass="radpass"
-ENV pg_host="127.0.0.1"
-ENV pg_port=5432
-ENV pg_dbase="radius"
+ENV PG_USER "radius"
+ENV PG_PASS "radpass"
+ENV PG_HOST "127.0.0.1"
+ENV PG_PORT 5432
+ENV PG_DBASE "radius"
+ENV PGPASSWORD $PG_PASS
+
 ARG RADIUS_DIR=/etc/freeradius/3.0
-ENV PGPASSWORD=$pg_pass
 RUN mkdir -p /usr/src/raddb
 
 COPY ./etc/raddb/schema.sql /usr/src/raddb/schema.sql
